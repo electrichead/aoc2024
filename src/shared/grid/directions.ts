@@ -1,4 +1,15 @@
-import { Coord, Dir, Grid } from './types';
+import { CaretDir, Coord, Dir, Grid } from './types';
+
+const caretDirConversionMap: Record<CaretDir, Dir> = {
+  '^': 'U',
+  '>': 'R',
+  v: 'D',
+  '<': 'L',
+};
+
+export function convertCaretToDir(caretDir: CaretDir): Dir {
+  return caretDirConversionMap[caretDir];
+}
 
 export function getNextInDir<T>(
   dir: Dir,
@@ -55,5 +66,31 @@ export function getNextInDir<T>(
         coord: [currRow + 1, currCol + 1],
         val: grid[currRow + 1]?.[currCol + 1],
       };
+  }
+}
+
+export function get90RotationRight(dir: Dir): Dir {
+  switch (dir) {
+    case 'U':
+      return 'R';
+    case 'R':
+      return 'D';
+    case 'D':
+      return 'L';
+    case 'L':
+      return 'U';
+  }
+}
+
+export function get90Rotations(dir: Dir): Dir[] {
+  switch (dir) {
+    case 'U':
+      return ['R', 'L'];
+    case 'R':
+      return ['U', 'D'];
+    case 'D':
+      return ['L', 'R'];
+    case 'L':
+      return ['U', 'D'];
   }
 }

@@ -8,7 +8,7 @@
     "moduleResolution": "node",
     "target": "esnext",
     "module": "commonjs",
-    "lib": ["es2020", "dom"],
+    "lib": ["esnext", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",

@@ -1,4 +1,5 @@
-import { CaretDir, Coord, Dir, Grid } from './types';
+import { Coord } from './coord';
+import { CaretDir, Dir, Grid } from './types';
 
 const caretDirConversionMap: Record<CaretDir, Dir> = {
   '^': 'U',
@@ -69,6 +70,18 @@ export function getNextInDir<T>(
   }
 }
 
+export function getNextCoordValInDir<T>(
+  dir: Dir,
+  curr: Coord,
+  grid: Grid<T>
+): { coord: Coord; val: T } {
+  const { coord, val } = getNextInDir(dir, curr, grid);
+  return {
+    coord,
+    val,
+  };
+}
+
 export function get90RotationRight(dir: Dir): Dir {
   switch (dir) {
     case 'U':
@@ -80,17 +93,41 @@ export function get90RotationRight(dir: Dir): Dir {
     case 'L':
       return 'U';
   }
+  throw new Error('Expected UDLR');
 }
 
 export function get90Rotations(dir: Dir): Dir[] {
   switch (dir) {
     case 'U':
-      return ['R', 'L'];
+      return ['L', 'R'];
     case 'R':
       return ['U', 'D'];
     case 'D':
-      return ['L', 'R'];
+      return ['R', 'L'];
     case 'L':
-      return ['U', 'D'];
+      return ['D', 'U'];
   }
+  throw new Error('Expected UDLR');
+}
+
+export function flipDir(dir: Dir): Dir {
+  switch (dir) {
+    case 'U':
+      return 'D';
+    case 'D':
+      return 'U';
+    case 'L':
+      return 'R';
+    case 'R':
+      return 'L';
+    case 'UL':
+      return 'DR';
+    case 'UR':
+      return 'DL';
+    case 'DL':
+      return 'UR';
+    case 'DR':
+      return 'UL';
+  }
+  throw new Error('Expected UDLR');
 }

@@ -4,6 +4,8 @@ export type Coord = [number, number]; // Row, Col
 export type CoordHash = `${number},${number}`;
 export type CoordAndDirHash = `${number},${number}:${Dir}`;
 
+export type CoordWithVal<T> = { coord: Coord; val: T };
+
 export function hashCoord(position: Coord): CoordHash {
   return `${position[0]},${position[1]}`;
 }
